@@ -18,6 +18,22 @@ class funcoes
 
 
 	/**
+	 * Verifica o acesso HTTP da Api
+	 * @return [Exception] throw
+	 */
+	public static function apiVerifyAcess(){
+
+		$user = $_SERVER[ 'PHP_AUTH_USER'    ];
+		$pass = $_SERVER[ 'PHP_AUTH_PW'      ];
+
+		if(  $user != LOGINAPI and $pass != SENHAAPI ){
+		 throw new Exception("Erro de autenticação HTTP, acesso não autorizado!");
+		}
+
+	}
+
+
+	/**
 	*
 	*Fução que limpa a string e deixa somente numeros
 	*
