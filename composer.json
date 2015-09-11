@@ -11,7 +11,8 @@
     "require": {
         "php": ">=5.3.0",
         "slim/slim": "~2.0",
-        "php-activerecord/php-activerecord": "v1.1.2"
+        "php-activerecord/php-activerecord": "v1.1.2",
+        "phpmailer/phpmailer": "5.*"
     },
     "autoload": {
         "psr-4": { "DunamisClasses\\": "DunamisClasses" }
