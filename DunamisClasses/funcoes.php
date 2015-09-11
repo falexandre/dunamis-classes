@@ -26,9 +26,12 @@ class funcoes
 		$user = $_SERVER[ 'PHP_AUTH_USER'    ];
 		$pass = $_SERVER[ 'PHP_AUTH_PW'      ];
 
-		if(  $user != LOGINAPI and $pass != SENHAAPI ){
-		 throw new Exception("Erro de autenticação HTTP, acesso não autorizado!");
+		if( defined(LOGINAPI) and defined(SENHAAPI) ){
+			if(  $user != LOGINAPI and $pass != SENHAAPI ){
+			 throw new Exception("Erro de autenticação HTTP, acesso não autorizado!");
+			}
 		}
+
 
 	}
 
