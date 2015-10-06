@@ -728,4 +728,54 @@ class funcoes
 
 
 
+	/**
+	 * Retorna status tratado do pag seguro
+	 * @param  [type] $cod int
+	 * @return [type]      array com staus string e descricao do que é o status
+	 */
+	public static function getStatusPagseguro( $cod ){
+
+		switch ($cod) {
+
+			case '1':
+				return array( 'status' => 'Aguardando pagamento', 'descricao' => 'o comprador iniciou a transação, mas até o momento o PagSeguro não recebeu nenhuma informação sobre o pagamento.' );
+				break;
+
+			case '2':
+				return array( 'status' => 'Em análise', 'descricao' => 'o comprador optou por pagar com um cartão de crédito e o PagSeguro está analisando o risco da transação.' );
+				break;
+
+			case '3':
+				return array( 'status' => 'Paga', 'descricao' => 'a transação foi paga pelo comprador e o PagSeguro já recebeu uma confirmação da instituição financeira responsável pelo processamento.' );
+				break;
+
+			case '4':
+				return array( 'status' => 'Disponível', 'descricao' => 'a transação foi paga e chegou ao final de seu prazo de liberação sem ter sido retornada e sem que haja nenhuma disputa aberta.' );
+				break;
+
+			case '5':
+				return array( 'status' => 'Em disputa', 'descricao' => 'o comprador, dentro do prazo de liberação da transação, abriu uma disputa.' );
+				break;
+
+			case '6':
+				return array( 'status' => 'Devolvida', 'descricao' => 'o valor da transação foi devolvido para o comprador.' );
+				break;
+
+			case '7':
+				return array( 'status' => 'Cancelada', 'descricao' => 'a transação foi cancelada sem ter sido finalizada.' );
+				break;
+
+			default:
+				return array( 'status' => 'erro', 'descricao' => "Código não relacionado" );
+				break;
+				
+
+		}
+
+
+	}
+
+
+
+
 }
