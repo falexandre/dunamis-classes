@@ -10,7 +10,7 @@
     ],
     "require": {
         "php"                               : ">=5.3.0",
-        "bkcore/nocsrf"                     : ">=1.*",
+        "bkcore/nocsrf"                     : ">=1",
         "phpmailer/phpmailer"               : "5.*"
     },
     "autoload": {
