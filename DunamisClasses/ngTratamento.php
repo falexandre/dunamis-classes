@@ -218,7 +218,7 @@ class ngTratamento{
 						
 						
 						default:
-							$campos_tratados[$nome_campo] = $valor;
+							$campos_tratados[$nome_campo] = self::limpaSQLtag($valor);
 							break;
 					}
 				}
