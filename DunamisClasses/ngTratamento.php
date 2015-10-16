@@ -203,6 +203,12 @@ class ngTratamento{
 							$campos_tratados[$nome_campo] = $newValor;
 							break;
 
+						case 'flg_newsletter':
+							$newValor = self::limpaSQLtag($valor);
+							$newValor = $newValor ? 'S' : 'N';
+							$campos_tratados[$nome_campo] = $newValor;
+							break;
+
 						case 'data_aplicacao':
 							if(!empty($valor)){
 								$newValor = self::limpaSQLtag($valor);
