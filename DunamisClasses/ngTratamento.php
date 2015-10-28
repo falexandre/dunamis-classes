@@ -167,8 +167,7 @@ class ngTratamento{
 
 						case 'peso':
 							$newValor = self::limpaSQLtag($valor);
-							$total    = strlen($newValor);
-							$newValor = ($total<=3) ? str_pad($newValor, 5, "0," , STR_PAD_LEFT) : $newValor;
+							$newValor = number_format($newValor,3,",","");
 							$campos_tratados[$nome_campo] = $newValor;
 							break;
 
