@@ -32,16 +32,6 @@ class ngTratamento{
 							$newValor = crypt($newValor);
 							$campos_tratados[$nome_campo] = $newValor;
 							break;
-
-
-						case 'datadenascimento':
-							$newValor = self::limpaSQLtag($valor);
-							$newValor = strtr($newValor , '/' , '-');
-							$newValor = strtotime($newValor);
-							$newValor = date('Y-m-d', $newValor);
-							$campos_tratados[$nome_campo] = $newValor;
-							break;
-
 							
 						case 'data_atendimento':
 							$newValor = self::limpaSQLtag($valor);
@@ -172,12 +162,6 @@ class ngTratamento{
 							break;
 
 
-						case 'placa':
-							$newValor = self::limpaSQLtag($valor);
-							$newValor = strtoupper($newValor);
-							$campos_tratados[$nome_campo] = $newValor;
-							break;
-
 						case 'data_inicio':
 							$newValor = self::limpaSQLtag($valor);
 							$newValor = strtr($newValor , '/' , '-');
@@ -220,7 +204,11 @@ class ngTratamento{
 							}
 							break;
 
-						
+
+						case 'cor':
+							  $campos_tratados[$nome_campo] = $valor;
+							break;
+
 						
 						default:
 							$campos_tratados[$nome_campo] = self::limpaSQLtag($valor);
