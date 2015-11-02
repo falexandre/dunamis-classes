@@ -4,6 +4,28 @@ namespace DunamisClasses;
 
 class funcoes 
 {
+	/**
+	 * Retorna a distancia entro 2 pontos de latitude e longitude
+	 * @param  [type] number $p1LA [description] latitude inicial
+	 * @param  [type] number $p1LO [description] longitude inicial
+	 * @param  [type] number $p2LA [description] latidude final
+	 * @param  [type] number $p2LO [description] longitude final
+	 * @return [type] number      [description] metros
+	 */
+	public static function distanciaPontosGPS($p1LA, $p1LO, $p2LA, $p2LO , $formato = 'M') {
+			$r     = 6371.0;	       
+			$p1LA  = $p1LA * pi() / 180.0;
+			$p1LO  = $p1LO * pi() / 180.0;
+			$p2LA  = $p2LA * pi() / 180.0;
+			$p2LO  = $p2LO * pi() / 180.0;	       
+			$dLat  = $p2LA - $p1LA;
+			$dLong = $p2LO - $p1LO;	       
+			$a     = 	sin($dLat / 2) * sin($dLat / 2) 
+						+ cos($p1LA) * cos($p2LA) 
+						* sin($dLong / 2) * sin($dLong / 2);
+			$c     = 2 * atan2(sqrt($a), sqrt(1 - $a));	       
+	    return ($formato == 'M') ? round($r * $c * 1000) : round($r * $c); // resultado em metros.
+	}
 	
 	public static function urlSeo($str){
 
