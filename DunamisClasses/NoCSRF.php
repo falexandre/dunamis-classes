@@ -14,7 +14,7 @@ namespace DunamisClasses;
 class NoCSRF
 {
 
-    protected static $doOriginCheck = false;
+    protected static $doOriginCheck = true;
 
     /**
      * Check CSRF tokens match between session and $origin. 
@@ -28,59 +28,40 @@ class NoCSRF
      * 
      * @return Boolean Returns FALSE if a CSRF attack is detected, TRUE otherwise.
      */
-    public static function check( $key, $origin, $throwException=false, $timespan=null, $multiple=false )
+    public static function check( $token , $timespan = null )
     {
-        if ( !isset( $_SESSION[ 'dunamis_csrf_' . $key ] ) )
-            if($throwException)
-                throw new Exception( 'Faltando CSRF session token.' );
-            else
-                return false;
+        //Verifica se existem a sessao token
+        if ( !isset( $_SESSION[ 'dunamis_csrf_token'] ) ){
+            throw new Exception( 'Não existem TOKEN a ser conferido.' );
+        }
             
-        if ( !isset( $origin[ $key ] ) )
-            if($throwException)
-                throw new Exception( 'Faltando CSRF token no formulário.' );
-            else
-                return false;
-
         // Get valid token from session
-        $hash = $_SESSION[ 'dunamis_csrf_' . $key ];
-		
-        // Free up session token for one-time CSRF token usage.
-		if(!$multiple)
-			$_SESSION[ 'dunamis_csrf_' . $key ] = null;
-
+        $hash = $_SESSION[ 'dunamis_csrf_token'];
+	
         // Origin checks
-        if( self::$doOriginCheck && sha1( $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] ) != substr( base64_decode( $hash ), 10, 40 ) )
-        {
-            if($throwException)
-                throw new Exception( 'Origem do fórmulário não corresponde a origem de token.' );
-            else
-                return false;
+        if( self::$doOriginCheck && sha1( $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] ) != substr( base64_decode( $hash ), 10, 40 ) ){
+            throw new Exception( 'Origem do fórmulário não corresponde a origem de token.' );
         }
         
         // Check if session token matches form token
-        if ( $origin[ $key ] != $hash )
-            if($throwException)
-                throw new Exception( 'Inválido CSRF token.' );
-            else
-                return false;
+        if ( $token != $hash ){
+            throw new Exception( 'Inválido CSRF token.' );
+        }
 
         // Check for token expiration
-        if ( $timespan != null && is_int( $timespan ) && intval( substr( base64_decode( $hash ), 0, 10 ) ) + $timespan < time() )
-            if($throwException)
+        if ( $timespan != null && is_int( $timespan ) && intval( substr( base64_decode( $hash ), 0, 10 ) ) + $timespan < time() ){
                 throw new Exception( 'CSRF token foi expirado.' );
-            else
-                return false;
+        }
 
         return true;
     }
 
     /**
-     * Adds extra useragent and remote_addr checks to CSRF protections.
+     * Disable extra useragent and remote_addr checks to CSRF protections.
      */
-    public static function enableOriginCheck()
+    public static function disableOriginCheck()
     {
-        self::$doOriginCheck = true;
+        self::$doOriginCheck = false;
     }
 
     /**
@@ -89,13 +70,13 @@ class NoCSRF
      * @param String $key The session key where the token will be stored. (Will also be the name of the hidden field name)
      * @return String The generated, base64 encoded token.
      */
-    public static function generate( $key )
+    public static function generate()
     {
         $extra = self::$doOriginCheck ? sha1( $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] ) : '';
         // token generation (basically base64_encode any random complex string, time() is used for token expiration) 
         $token = base64_encode( time() . $extra . self::randomString( 32 ) );
         // store the one-time token in session
-        $_SESSION[ 'dunamis_csrf_' . $key ] = $token;
+        $_SESSION[ 'dunamis_csrf_token'] = $token;
 
         return $token;
     }
