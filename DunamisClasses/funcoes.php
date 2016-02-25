@@ -562,10 +562,11 @@ class funcoes
 	* @param int $height altura do embed
 	* @return String Código embed do vídeo
 	*/
-	public static function youTube($link){
+	public static function youTube($link,$iframe=true){
 	$cod_video = explode('watch?v=', $link);
 	$cod_video = is_numeric($cod_video[1]) ? $cod_video[1] : reset( explode('&', $cod_video[1]) );
-	return "<iframe class=\"embed-responsive-item\" src=\"http://www.youtube.com/embed/$cod_video\" frameborder=\"0\" allowfullscreen></iframe>";
+	$video = "<iframe class=\"embed-responsive-item\" src=\"http://www.youtube.com/embed/$cod_video\" frameborder=\"0\" allowfullscreen></iframe>";
+	return $iframe ? $video : $cod_video;
 	}
 
 
