@@ -214,7 +214,7 @@ class email{
 			$headers .= "Bcc: Fábio <fabiolalexandre@gmail.com>\n";
 
 			// Mail it
-			$enviado = mail($to, utf8_encode("Formulário de contato - "). APPTITULO, $html_email, $headers);
+			$enviado = mail($to, $this->assunto , $html_email, $headers);
 
 		}
 
