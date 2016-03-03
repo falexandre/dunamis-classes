@@ -167,11 +167,8 @@ class paginacao extends Model{
 			$result = array();
 
 			for ($i = $this->inicio; $i <= $this->limite; $i++){
-				if($this->pagina_atual == $i){
-					$result['atual'] = $i;
+				if($i >= 1 && $i <= $this->TotalPorPagina){
 					$result[] = $i;
-				}elseif($i >= 1 && $i <= $this->TotalPorPagina){
-				$result[] = $i;
 				}
 			}
 
