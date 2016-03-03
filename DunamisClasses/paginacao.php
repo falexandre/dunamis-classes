@@ -161,6 +161,22 @@ class paginacao extends Model{
 
 	}
 
+	public function toArray(){
+
+		if( $this->total_registro > $this->quantidade_exibir ){
+			$result = array();
+
+			for ($i = $this->inicio; $i <= $this->limite; $i++){
+				$result[] = $i;
+			}
+
+			return $result;
+		}else{
+			return;
+		}
+
+	}
+
 
 }
 
