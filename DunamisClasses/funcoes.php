@@ -761,6 +761,10 @@ class funcoes
 	public static function getStatusPagseguro( $cod ){
 
 		switch ($cod) {
+			
+			case null:
+				return array( 'status' => 'Sem Status', 'descricao' => 'Ainda não foi gravado status, retorno NULL.' );
+				break;
 
 			case '1':
 				return array( 'status' => 'Aguardando pagamento', 'descricao' => 'o comprador iniciou a transação, mas até o momento o PagSeguro não recebeu nenhuma informação sobre o pagamento.' );
