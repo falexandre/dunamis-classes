@@ -177,6 +177,15 @@ class ngTratamento{
 							$newValor = date('Y-m-d', $newValor);
 							$campos_tratados[$nome_campo] = $newValor;
 							break;
+							
+
+						case 'datadenascimento':
+							$newValor = self::limpaSQLtag($valor);
+							$newValor = strtr($newValor , '/' , '-');
+							$newValor = strtotime($newValor);
+							$newValor = date('Y-m-d', $newValor);
+							$campos_tratados[$nome_campo] = $newValor;
+							break;
 
 						case 'data_agendamento':
 							$newValor = self::limpaSQLtag($valor);
